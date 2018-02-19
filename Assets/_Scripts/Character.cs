@@ -13,6 +13,7 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     float limitVel;
     bool isStoped = true;
+    Vector2 clampedVel;
     [SerializeField]
     float jumpForce;
     bool btn_jump;
@@ -39,14 +40,13 @@ public abstract class Character : MonoBehaviour
     protected virtual void MovePlayer()
     {
         rb2D.AddForce(Vector2.right * moveSpeed * Axis.normalized.x, ForceMode2D.Impulse);
-        rb2D.velocity = Vector2.ClampMagnitude(rb2D.velocity, limitVel);
+        clampedVel = Vector2.ClampMagnitude(rb2D.velocity, limitVel);
+        rb2D.velocity = new Vector2(clampedVel.x, rb2D.velocity.y);
 
-        if(Axis.x == 0f && !isStoped)
+        if (rb2D.velocity.x != 0f)
         {
-            isStoped = true;
+            rb2D.velocity = Axis.x != 0f ? rb2D.velocity : new Vector2(0f, rb2D.velocity.y);
         }
-
-        CheckVelocity(isStoped);
     }
 
     protected virtual void Jump()
@@ -60,20 +60,5 @@ public abstract class Character : MonoBehaviour
     Vector2 Axis
     {
         get { return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")); }
-    }
-
-    void CheckVelocity(bool isStoped)
-    {
-        if (isStoped)
-        {
-            if (Axis.x != 0f)
-            {
-                isStoped = false;
-            }
-            else
-            {
-                rb2D.velocity = new Vector2(0f, rb2D.velocity.y);
-            }
-        }
     }
 }
