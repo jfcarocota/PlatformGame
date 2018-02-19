@@ -7,12 +7,14 @@ public class Player : Character
 {
     protected override void MovePlayer()
     {
-        Debug.Log("My Version of move player");
         base.MovePlayer();
+
     }
 
-    private void Update()
+    private new void Update()
     {
+        base.Update();
         MovePlayer();
+        Jump();
     }
 }
