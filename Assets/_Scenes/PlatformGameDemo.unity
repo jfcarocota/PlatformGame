@@ -204,9 +204,9 @@ GameObject:
   - component: {fileID: 453334571}
   - component: {fileID: 453334570}
   - component: {fileID: 453334569}
-  - component: {fileID: 453334568}
   - component: {fileID: 453334567}
   - component: {fileID: 453334566}
+  - component: {fileID: 453334568}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -228,6 +228,12 @@ MonoBehaviour:
   limitVel: 4
   jumpForce: 7
   moveSpeed: 3
+  jumpSystem:
+    rayColor: {r: 0.9862069, g: 1, b: 0, a: 1}
+    rayDistance: 0.91
+    groundLayer:
+      serializedVersion: 2
+      m_Bits: 256
 --- !u!50 &453334567
 Rigidbody2D:
   serializedVersion: 4
@@ -248,8 +254,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &453334568
-BoxCollider2D:
+--- !u!70 &453334568
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -261,18 +267,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.0423098, y: 1.46}
+  m_Direction: 0
 --- !u!95 &453334569
 Animator:
   serializedVersion: 3
@@ -324,7 +320,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a200ab8cebbf3194cb25b8ea8ab0a829, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b7f2095fd51a644395b1b79ff6105e7, type: 3}
   m_Color: {r: 1, g: 0.16911763, b: 0.35821503, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -357,7 +353,7 @@ GameObject:
   - component: {fileID: 1019299390}
   - component: {fileID: 1019299389}
   - component: {fileID: 1019299388}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Animator))]
 
 public abstract class Character : MonoBehaviour
@@ -21,6 +21,10 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     float moveSpeed;
 
+    [SerializeField]
+    JumpSystem jumpSystem;
+    bool isLanding;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -34,7 +38,8 @@ public abstract class Character : MonoBehaviour
 
     protected void Update()
     {
-        btn_jump = Input.GetButtonDown("Jump");
+        isLanding = jumpSystem.IsLanding(transform.position);
+        btn_jump = Input.GetButtonDown("Jump") && isLanding;
     }
 
     protected virtual void MovePlayer()
@@ -43,7 +48,7 @@ public abstract class Character : MonoBehaviour
         clampedVel = Vector2.ClampMagnitude(rb2D.velocity, limitVel);
         rb2D.velocity = new Vector2(clampedVel.x, rb2D.velocity.y);
 
-        if (rb2D.velocity.x != 0f)
+        if (rb2D.velocity.x != 0f && isLanding)
         {
             rb2D.velocity = Axis.x != 0f ? rb2D.velocity : new Vector2(0f, rb2D.velocity.y);
         }
@@ -57,8 +62,22 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    Vector2 Axis
+    protected Vector2 Axis
     {
         get { return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")); }
+    }
+
+    public Animator Anim
+    {
+        get
+        {
+            return anim;
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = jumpSystem.RayColor;
+        Gizmos.DrawRay(transform.position, Vector2.down * jumpSystem.RayDistance);
     }
 }
