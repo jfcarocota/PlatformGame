@@ -11,6 +11,18 @@ public class Player : Character
         Anim.SetFloat("axisX", Mathf.Abs(Axis.x));
     }
 
+    protected override void Jump()
+    {
+        Anim.SetFloat("velY", Rb2D.velocity.y);
+        Anim.SetBool("isLanding", IsLanding);
+        if (Btn_jump)
+        {
+            GameManager.instance.PlaySFX(0);
+            base.Jump();
+            Anim.SetTrigger("jump");
+        }
+    }
+
     private new void Update()
     {
         base.Update();

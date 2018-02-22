@@ -8,8 +8,10 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
+    SpriteRenderer spr;
     Animator anim;
     Rigidbody2D rb2D;
+
     [SerializeField]
     float limitVel;
     bool isStoped = true;
@@ -29,6 +31,7 @@ public abstract class Character : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
+        spr = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -40,26 +43,29 @@ public abstract class Character : MonoBehaviour
     {
         isLanding = jumpSystem.IsLanding(transform.position);
         btn_jump = Input.GetButtonDown("Jump") && isLanding;
+        FlipSprite();
+    }
+
+    void FlipSprite()
+    {
+        spr.flipX = Axis.x > 0f ? false : Axis.x < 0f ? true : spr.flipX;
     }
 
     protected virtual void MovePlayer()
     {
-        rb2D.AddForce(Vector2.right * moveSpeed * Axis.normalized.x, ForceMode2D.Impulse);
-        clampedVel = Vector2.ClampMagnitude(rb2D.velocity, limitVel);
-        rb2D.velocity = new Vector2(clampedVel.x, rb2D.velocity.y);
+        Rb2D.AddForce(Vector2.right * moveSpeed * Axis.normalized.x, ForceMode2D.Impulse);
+        clampedVel = Vector2.ClampMagnitude(Rb2D.velocity, limitVel);
+        Rb2D.velocity = new Vector2(clampedVel.x, Rb2D.velocity.y);
 
-        if (rb2D.velocity.x != 0f && isLanding)
+        if (Rb2D.velocity.x != 0f && isLanding)
         {
-            rb2D.velocity = Axis.x != 0f ? rb2D.velocity : new Vector2(0f, rb2D.velocity.y);
+            Rb2D.velocity = Axis.x != 0f ? Rb2D.velocity : new Vector2(0f, Rb2D.velocity.y);
         }
     }
 
     protected virtual void Jump()
     {
-        if (btn_jump)
-        {
-            rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        }
+        Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); 
     }
 
     protected Vector2 Axis
@@ -72,6 +78,30 @@ public abstract class Character : MonoBehaviour
         get
         {
             return anim;
+        }
+    }
+
+    public Rigidbody2D Rb2D
+    {
+        get
+        {
+            return rb2D;
+        }
+    }
+
+    public bool Btn_jump
+    {
+        get
+        {
+            return btn_jump;
+        }
+    }
+
+    public bool IsLanding
+    {
+        get
+        {
+            return isLanding;
         }
     }
 
