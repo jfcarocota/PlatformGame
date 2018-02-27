@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GameUtils;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Animator))]
 
-public abstract class Character : MonoBehaviour
+public abstract class Character : PlayerBehaviours
 {
     SpriteRenderer spr;
     Animator anim;
@@ -18,7 +19,6 @@ public abstract class Character : MonoBehaviour
     Vector2 clampedVel;
     [SerializeField]
     float jumpForce;
-    bool btn_jump;
 
     [SerializeField]
     float moveSpeed;
@@ -39,38 +39,19 @@ public abstract class Character : MonoBehaviour
         rb2D.freezeRotation = true;
     }
 
+    private void FixedUpdate()
+    {
+    }
+
     protected void Update()
     {
         isLanding = jumpSystem.IsLanding(transform.position);
-        btn_jump = Input.GetButtonDown("Jump") && isLanding;
         FlipSprite();
     }
 
     void FlipSprite()
     {
         spr.flipX = Axis.x > 0f ? false : Axis.x < 0f ? true : spr.flipX;
-    }
-
-    protected virtual void MovePlayer()
-    {
-        Rb2D.AddForce(Vector2.right * moveSpeed * Axis.normalized.x, ForceMode2D.Impulse);
-        clampedVel = Vector2.ClampMagnitude(Rb2D.velocity, limitVel);
-        Rb2D.velocity = new Vector2(clampedVel.x, Rb2D.velocity.y);
-
-        if (Rb2D.velocity.x != 0f && isLanding)
-        {
-            Rb2D.velocity = Axis.x != 0f ? Rb2D.velocity : new Vector2(0f, Rb2D.velocity.y);
-        }
-    }
-
-    protected virtual void Jump()
-    {
-        Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse); 
-    }
-
-    protected Vector2 Axis
-    {
-        get { return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")); }
     }
 
     public Animator Anim
@@ -89,19 +70,77 @@ public abstract class Character : MonoBehaviour
         }
     }
 
-    public bool Btn_jump
-    {
-        get
-        {
-            return btn_jump;
-        }
-    }
 
     public bool IsLanding
     {
         get
         {
             return isLanding;
+        }
+    }
+
+    public Vector2 ClampedVel
+    {
+        get
+        {
+            return clampedVel;
+        }
+
+        set
+        {
+            clampedVel = value;
+        }
+    }
+
+    public float LimitVel
+    {
+        get
+        {
+            return limitVel;
+        }
+
+        set
+        {
+            limitVel = value;
+        }
+    }
+
+    public float MoveSpeed
+    {
+        get
+        {
+            return moveSpeed;
+        }
+
+        set
+        {
+            moveSpeed = value;
+        }
+    }
+
+    public bool IsLanding1
+    {
+        get
+        {
+            return isLanding;
+        }
+
+        set
+        {
+            isLanding = value;
+        }
+    }
+
+    public float JumpForce
+    {
+        get
+        {
+            return jumpForce;
+        }
+
+        set
+        {
+            jumpForce = value;
         }
     }
 
