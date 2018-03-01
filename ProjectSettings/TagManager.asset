@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: GROUND
+    uniqueID: 3577220505
+    locked: 0
+  - name: GRASS
+    uniqueID: 2768196697
+    locked: 0
+  - name: PLAYER
+    uniqueID: 3205960301
+    locked: 0
