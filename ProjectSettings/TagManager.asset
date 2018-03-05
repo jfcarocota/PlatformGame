@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Coin
   layers:
   - Default
   - TransparentFX
@@ -49,4 +50,7 @@ TagManager:
     locked: 0
   - name: PLAYER
     uniqueID: 3205960301
+    locked: 0
+  - name: WATERFALL
+    uniqueID: 129258823
     locked: 0

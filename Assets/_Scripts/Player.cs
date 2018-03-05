@@ -28,4 +28,12 @@ public class Player : Character
         MovePlayer(Rb2D, MoveSpeed, ClampedVel, LimitVel, IsLanding);
         Jump(Rb2D, JumpForce);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Coin"))
+        {
+            Destroy(collision.gameObject);
+        }
+    }
 }
