@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: CoinBrush
   m_EditorClassIdentifier: 
   m_Prefabs:
-  - {fileID: 1205693431081494, guid: a8a0c09dd5196d54986d8f211b0092f9, type: 2}
+  - {fileID: 1689420369388062, guid: a8a0c09dd5196d54986d8f211b0092f9, type: 2}
   m_PerlinScale: 0.5
   m_Z: 0
