@@ -12,6 +12,7 @@ public class CheckHitTop : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             enemey.Bc2D.enabled = false;
+            enemey.Rb2D.AddForce(Vector2.up * 10f, ForceMode2D.Impulse);
         }
     }
 }

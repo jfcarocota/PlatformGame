@@ -27,6 +27,8 @@ public abstract class Character : PlayerBehaviours
     JumpSystem jumpSystem;
     bool isLanding;
 
+    bool knockingBack;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -141,6 +143,19 @@ public abstract class Character : PlayerBehaviours
         set
         {
             jumpForce = value;
+        }
+    }
+
+    public bool KnockingBack
+    {
+        get
+        {
+            return knockingBack;
+        }
+
+        set
+        {
+            knockingBack = value;
         }
     }
 

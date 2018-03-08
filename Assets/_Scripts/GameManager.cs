@@ -10,6 +10,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     AudioSource aud;
+    [SerializeField]
+    Health heath;
+
+    public Health Heath
+    {
+        get
+        {
+            return heath;
+        }
+    }
 
     private void Awake()
     {

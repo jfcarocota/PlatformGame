@@ -41,6 +41,24 @@ public class Enemy : MonoBehaviour
         bc2D = GetComponent<BoxCollider2D>();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            //GameManager.instance.Heath.LostHearts();
+            foreach (ContactPoint2D contact in collision.contacts)
+            {
+                print(contact.collider.name + " hit " + contact.otherCollider.name);
+                Debug.DrawRay(contact.point, contact.normal, Color.white);
+                Player player = collision.gameObject.GetComponent<Player>();
+                //rb2D.AddForce(contact.normal * 10f, ForceMode2D.Impulse);
+                //player.Rb2D.AddForce(-contact.normal * 5f, ForceMode2D.Impulse);
+                StartCoroutine(player.KnockBack(0.5f, 5f, -contact.normal));
+            }
+            //collision.collider.bounds.
+        }
+    }
+
     private void Start()
     {
         patrol = Patrolling(delay);

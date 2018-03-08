@@ -24,9 +24,12 @@ public class Player : Character
 
     private new void Update()
     {
-        base.Update();
-        MovePlayer(Rb2D, MoveSpeed, ClampedVel, LimitVel, IsLanding);
-        Jump(Rb2D, JumpForce);
+        if (!KnockingBack)
+        {
+            base.Update();
+            MovePlayer(Rb2D, MoveSpeed, ClampedVel, LimitVel, IsLanding);
+            Jump(Rb2D, JumpForce);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -35,5 +38,13 @@ public class Player : Character
         {
             Destroy(collision.gameObject);
         }
+    }
+
+    public IEnumerator KnockBack(float delay, float force, Vector2 dir)
+    {
+        KnockingBack = true;
+        Rb2D.AddForce(dir * force, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(delay);
+        KnockingBack = false;
     }
 }
