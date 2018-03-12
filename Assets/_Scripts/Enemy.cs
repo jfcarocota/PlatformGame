@@ -19,6 +19,8 @@ public class Enemy : MonoBehaviour
     Rigidbody2D rb2D;
     BoxCollider2D bc2D;
 
+    SpriteRenderer spr;
+
     public BoxCollider2D Bc2D
     {
         get
@@ -39,23 +41,21 @@ public class Enemy : MonoBehaviour
     {
         rb2D = GetComponent<Rigidbody2D>();
         bc2D = GetComponent<BoxCollider2D>();
+        spr = GetComponent<SpriteRenderer>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Player"))
         {
-            //GameManager.instance.Heath.LostHearts();
+            GameManager.instance.Heath.LostHearts();
             foreach (ContactPoint2D contact in collision.contacts)
             {
                 print(contact.collider.name + " hit " + contact.otherCollider.name);
                 Debug.DrawRay(contact.point, contact.normal, Color.white);
                 Player player = collision.gameObject.GetComponent<Player>();
-                //rb2D.AddForce(contact.normal * 10f, ForceMode2D.Impulse);
-                //player.Rb2D.AddForce(-contact.normal * 5f, ForceMode2D.Impulse);
                 StartCoroutine(player.KnockBack(0.5f, 5f, -contact.normal));
             }
-            //collision.collider.bounds.
         }
     }
 
@@ -73,11 +73,13 @@ public class Enemy : MonoBehaviour
         {
             if(direction == Direction.right)
             {
-               StartCoroutine( moveRight);
+                spr.flipX = false;
+                StartCoroutine( moveRight);
             }
             if (direction == Direction.left)
             {
-               StartCoroutine(moveLeft);
+                spr.flipX = true;
+                StartCoroutine(moveLeft);
             }
             yield return new WaitForSeconds(delay);
             switch (direction)
