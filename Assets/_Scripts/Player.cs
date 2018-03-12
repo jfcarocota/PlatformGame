@@ -10,7 +10,7 @@ public class Player : Character
         Anim.SetBool("isLanding", IsLanding);
         if (Btn_jump(IsLanding))
         {
-            GameManager.instance.PlaySFX(0);
+            GameManager.instance.PlaySFX(0, 0.2f);
             base.Jump(Rb2D, jumpForce);
             Anim.SetTrigger("jump");
         }
@@ -20,6 +20,10 @@ public class Player : Character
     {
         base.MovePlayer(rb2D, moveSpeed, clampedVel, limitVel, isLanding);
         Anim.SetFloat("axisX", Mathf.Abs(Axis.x));
+        if (IsLanding && Axis.x != 0f)
+        {
+            GameManager.instance.PlaySFXContinius(3, 0.2f);
+        }
     }
 
     private new void Update()
@@ -36,6 +40,7 @@ public class Player : Character
     {
         if (collision.CompareTag("Coin"))
         {
+            GameManager.instance.PlaySFX(1, 0.5f);
             Destroy(collision.gameObject);
         }
     }
