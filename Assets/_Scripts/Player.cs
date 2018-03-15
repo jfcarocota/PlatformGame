@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using XboxCtrlrInput;
+
 
 public class Player : Character
 {
@@ -51,5 +53,6 @@ public class Player : Character
         Rb2D.AddForce(dir * force, ForceMode2D.Impulse);
         yield return new WaitForSeconds(delay);
         KnockingBack = false;
+        
     }
 }
