@@ -29,6 +29,8 @@ public abstract class Character : PlayerBehaviours
 
     bool knockingBack;
 
+    bool isOnCinematic;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -156,6 +158,19 @@ public abstract class Character : PlayerBehaviours
         set
         {
             knockingBack = value;
+        }
+    }
+
+    public bool IsOnCinematic
+    {
+        get
+        {
+            return isOnCinematic;
+        }
+
+        set
+        {
+            isOnCinematic = value;
         }
     }
 

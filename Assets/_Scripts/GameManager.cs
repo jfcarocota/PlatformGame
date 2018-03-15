@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     Health heath;
 
+    [SerializeField]
+    Character character;
+
     public Health Heath
     {
         get
@@ -25,6 +28,17 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         aud = GetComponent<AudioSource>();
+    }
+
+    public bool PlayerIsActing
+    {
+        get { return character.IsOnCinematic; }
+        set { character.IsOnCinematic = value; }
+    }
+
+    public Animatior PlayerAnim
+    {
+        get { return character.Anim; }
     }
 
     public void PlaySFX(int index)

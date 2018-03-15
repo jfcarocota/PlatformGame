@@ -30,11 +30,14 @@ public class Player : Character
 
     private new void Update()
     {
-        if (!KnockingBack)
+        if (!IsOnCinematic)
         {
-            base.Update();
-            MovePlayer(Rb2D, MoveSpeed, ClampedVel, LimitVel, IsLanding);
-            Jump(Rb2D, JumpForce);
+            if (!KnockingBack)
+            {
+                base.Update();
+                MovePlayer(Rb2D, MoveSpeed, ClampedVel, LimitVel, IsLanding);
+                Jump(Rb2D, JumpForce);
+            }
         }
     }
 
