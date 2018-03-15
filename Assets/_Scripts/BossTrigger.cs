@@ -10,12 +10,8 @@ public class BossTrigger : MonoBehaviour
         {
             //Start acting
             GameManager.instance.PlayerIsActing = true;
-
-            if (GameManager.instance.PlayerIsActing)
-            {
-
-                Debug.Log("Acting");
-            }
+            GameManager.instance.PlayerAnim.SetFloat("axisX", 0f);
+            GameManager.instance.Pd.Play();
         }
     }
 }

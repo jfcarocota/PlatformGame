@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     Character character;
+
+    [SerializeField]
+    PlayableDirector pd;
 
     public Health Heath
     {
@@ -36,9 +40,17 @@ public class GameManager : MonoBehaviour
         set { character.IsOnCinematic = value; }
     }
 
-    public Animatior PlayerAnim
+    public Animator PlayerAnim
     {
         get { return character.Anim; }
+    }
+
+    public PlayableDirector Pd
+    {
+        get
+        {
+            return pd;
+        }
     }
 
     public void PlaySFX(int index)
